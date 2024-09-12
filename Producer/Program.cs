@@ -15,7 +15,7 @@ public class Program {
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) => {
-                services.AddSingleton<RabbitContext>();
+                services.AddSingleton(provider => RabbitContext.GetInstance());
                 services.AddScoped<App>();
                 services.AddScoped<RelatorioService>();
                 services.AddScoped<NotificationService>();
