@@ -1,9 +1,16 @@
 ﻿using Producer.Models;
 
 namespace Producer.Services {
-    public static class RelatorioService {
-        public static List<Relatorio> Relatorios { get; } = new (){
+    public class RelatorioService {
+        private readonly NotificationService _notificationService;
+        public RelatorioService(NotificationService notificationService)
+        {
+            _notificationService = notificationService;
+        }
 
-        };
+        public void EnviarRelatorioParaAnalise(Relatorio relatorio) {
+            Relatorio.DefinirStatusDoRelatorio(relatorio);
+            _notificationService.EnviarNotificacao(relatorio);
+        }
     }
 }

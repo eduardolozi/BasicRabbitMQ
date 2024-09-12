@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Producer.Models {
+﻿namespace Producer.Models {
     public class Relatorio {
         public Relatorio(Guid id, string relator, string conteudo)
         {
             Id = id;
             Relator = relator;
             Conteudo = conteudo;
+            Status = StatusRelatorioEnum.NAO_ENVIADO;
         }
 
         public Guid Id { get; init; }
-        public string Relator {  get; set; }
-        public string Conteudo { get; set; }
-        public int? ErrosEncontrados { get; set; }
-        public StatusRelatorioEnum Status { get; set; }
+        public string Relator {  get; private set; }
+        public string Conteudo { get; private set; }
+        public int? ErrosEncontrados { get; private set; }
+        public StatusRelatorioEnum Status { get; private set; }
         
         public static void DefinirStatusDoRelatorio(Relatorio relatorio) {
             relatorio.Status = relatorio.ErrosEncontrados switch {

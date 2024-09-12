@@ -1,16 +1,11 @@
-﻿using Services.Rabbit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Producer.Models;
+using Services.Rabbit;
 
 namespace Producer.Services {
     public class NotificationService {
-        public void EnviarNotificacao() {
-
+        public void EnviarNotificacao(Relatorio relatorio) {
+            RabbitService.
         }
 
-        public void 
     }
 }
