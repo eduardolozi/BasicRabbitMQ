@@ -1,6 +1,5 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
 
@@ -12,7 +11,7 @@ namespace Services.Rabbit {
             return connectionFactory.CreateConnection();
         }
 
-        public static IModel CreateQueuesForDirectExchange(IConnection connection, string exchangeName, Dictionary<string, string> dictQueueRoutingKey) {
+        public static void CreateQueuesForDirectExchange(IConnection connection, string exchangeName, Dictionary<string, string> dictQueueRoutingKey) {
             var channel = connection.CreateModel();
 
             channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
@@ -20,11 +19,10 @@ namespace Services.Rabbit {
                 channel.QueueDeclare(element.Key, true, false, false, null);
                 channel.QueueBind(element.Key, exchangeName, element.Value, null);
             }
-
-            return channel;
         }
 
-        public static void PublishMessage<T>(IModel channel, T messageValue, string exchangeName, string routingKey) {
+        public static void PublishMessage<T>(IConnection connection, T messageValue, string exchangeName, string routingKey) {
+            using var channel = connection.CreateModel();
             var messageSerialized = JsonSerializer.Serialize(messageValue);
             var messageBytes = Encoding.UTF8.GetBytes(messageSerialized);
             channel.BasicPublish(exchangeName, routingKey, null, messageBytes);

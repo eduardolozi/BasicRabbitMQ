@@ -14,6 +14,10 @@
         public int? ErrosEncontrados { get; private set; }
         public StatusRelatorioEnum Status { get; private set; }
         
+        public static void DefinirQuantidadeDeErros(Relatorio relatorio, int qauntidade) {
+            relatorio.ErrosEncontrados = qauntidade;
+        }
+
         public static void DefinirStatusDoRelatorio(Relatorio relatorio) {
             relatorio.Status = relatorio.ErrosEncontrados switch {
                 null => StatusRelatorioEnum.ENVIADO_PARA_ANALISE,

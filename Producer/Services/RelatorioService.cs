@@ -1,4 +1,5 @@
 ﻿using Producer.Models;
+using System.Security.Cryptography;
 
 namespace Producer.Services {
     public class RelatorioService {
@@ -8,9 +9,15 @@ namespace Producer.Services {
             _notificationService = notificationService;
         }
 
-        public void EnviarRelatorioParaAnalise(Relatorio relatorio) {
+        public void EnviarRelatorioParaNovoPasso(Relatorio relatorio) {
             Relatorio.DefinirStatusDoRelatorio(relatorio);
             _notificationService.EnviarNotificacao(relatorio);
+        }
+
+        public void InserirQuantidadeDeErrosNoRelatorio(Relatorio relatorio) {
+            var random = new Random();
+            Relatorio.DefinirQuantidadeDeErros(relatorio, random.Next(15));
+            EnviarRelatorioParaNovoPasso(relatorio);
         }
     }
 }
