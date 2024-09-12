@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Producer.Models;
 
 namespace Producer.Services {
-    internal class RelatorioService {
+    public static class RelatorioService {
+        public static List<Relatorio> Relatorios { get; } = new (){
+
+        };
     }
 }
