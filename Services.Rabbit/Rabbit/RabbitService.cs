@@ -28,14 +28,14 @@ namespace Services.Rabbit {
             channel.BasicPublish(exchangeName, routingKey, null, messageBytes);
         }
 
-        public static void ConsumeMessage<T>(IConnection connection, Action<T> action, string queueName) {
+        public static void ConsumeMessage<T>(IConnection connection, Action<string> action, string queueName) {
             var channel = connection.CreateModel();
             var consumer = new EventingBasicConsumer(channel);
 
             consumer.Received += (ch, ea) => {
                 var data = GetData<T>(ea.Body);
                 
-                action(data);
+                action(data.ToString());
 
                 channel.BasicAck(ea.DeliveryTag, false);
             };

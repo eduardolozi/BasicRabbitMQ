@@ -14,7 +14,7 @@ namespace Producer.Services {
             var conexao = _rabbitContext.GetConnection();
             var notificacao = new Notificacao { Id = Guid.NewGuid() };
             Notificacao.DefinirTituloPeloStatusRelatorio(notificacao, relatorio.Status);
-            notificacao.Descricao = $"{relatorio.Relator}.\n{notificacao.Titulo}.\nObrigado!";
+            notificacao.Descricao = $"{relatorio.Relator}. {notificacao.Titulo}.\nObrigado!\n";
             
             RabbitService.PublishMessage<Notificacao>(conexao, notificacao, "Notificacoes", $"Notificacoes_{relatorio.Status}");            
         }
